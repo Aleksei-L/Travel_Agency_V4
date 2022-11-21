@@ -12,6 +12,7 @@ public:
 	Client();
 	Client(const char* n, const char* c, int p, int a);
 	Client(const Client& t);
+	void dispose();
 	~Client();
 	int input();
 	void output();
@@ -34,6 +35,8 @@ public:
 	T* End();
 	int Length();
 	int GetSize();
+	T* Erase(T* pos);
+	void Clear();
 	T* Insert(const T& newClient);
 	int Input(T buf);
 	void Output();

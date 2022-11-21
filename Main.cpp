@@ -14,14 +14,14 @@ int main() {
 	myT.Output();
 	std::cout << std::endl;
 
-	/*std::cout << "Enter new client for Replace:" << std::endl;
+	std::cout << "Enter new client for Search:" << std::endl;
 	Client one, two;
 	one.input();
-	two.input();
-	myT.Replace(&one, &two);*/
+	//two.input();
+	std::cout << myT.Search(&one) << std::endl;
 
 	std::cout << std::endl;
 	myT.Output();
-	
+
 	return 0;
 }

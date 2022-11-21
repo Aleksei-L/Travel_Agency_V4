@@ -31,6 +31,24 @@ int Table::GetSize() {
 	return size;
 }
 
+// Удаление одного элемента в таблице
+T* Table::Erase(T* pos) {
+	(*pos)->dispose();
+	for (T* i = pos; i < current; i++)
+		*i = *(i + 1);
+	current--;
+	return pos;
+}
+
+// Удаление всех элементов в таблице
+void Table::Clear() {
+	for (T* i = m; i < current; i++) {
+		(*i)->dispose();
+		delete (*i);
+	}
+	current = m;
+}
+
 // Вставка нового клиента в таблицу
 T* Table::Insert(const T& newClient) {
 	if (Length() < size)
@@ -49,9 +67,10 @@ int Table::Input(T buf) {
 // Вывод таблицы
 void Table::Output() {
 	bool flag = false;
-	for (int i = 0; i < size; i++) {
-		std::cout << "Client #" << i + 1 << std::endl;
-		m[i]->output();
+	int counter = 1;
+	for (T* i = Begin(); i != End(); i++) {
+		std::cout << "Client #" << counter++ << std::endl;
+		(*i)->output();
 		flag = true;
 		std::cout << std::endl;
 	}
@@ -61,8 +80,8 @@ void Table::Output() {
 
 // Сортировка таблицы
 void Table::Sort() {
-	for (int i = 0; i < size; i++) {
-		for (int j = i + 1; j < size; j++) {
+	for (int i = 0; i < GetSize(); i++) {
+		for (int j = i + 1; j < GetSize(); j++) {
 			if (m[i]->cmp(*m[j]) > 0)
 				std::swap(m[i], m[j]);
 		}
@@ -70,13 +89,13 @@ void Table::Sort() {
 }
 
 // Поиск клиента в таблице, возвращает индекс найденного клиента или -1 если клиент не найден
-//int Table::Search(const T& tempClient) {
-//	for (int i = 0; i < size; i++) {
-//		if (m[i]->equal(tempClient))
-//			return i;
-//	}
-//	return -1;
-//}
+int Table::Search(const T& tempClient) {
+	for (T* i = Begin(); i < End(); i++) {
+		if ((*i)->equal(*tempClient))
+			return i - Begin();
+	}
+	return -1;
+}
 
 // Замена клиента в таблице
 //void Table::Replace(const T& oldClient, const T& newClient) {

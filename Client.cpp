@@ -33,9 +33,14 @@ Client::Client(const Client& t) {
 	age = t.age;
 }
 
+// Освобождение памяти из-под клиента
+void Client::dispose() {
+	delete[] name;
+}
+
 // Деструктор клиента
 Client::~Client() {
-	delete[] name;
+	dispose();
 }
 
 // Ввод информации про клиента
