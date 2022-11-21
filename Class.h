@@ -2,27 +2,6 @@
 #include <iostream>
 #include <string.h>
 
-// Прототип класса Client, т. к. он используется в классе Table до объявления самого класса Client
-class Client;
-
-class Table {
-private:
-	int size; // Размер таблицы
-	Client** m; // Таблица клиентов
-	Client** current; // Указатель на первый свободный в таблице
-public:
-	Table(int s);
-	~Table();
-	Client* Copy(Client& client);
-	Client** Insert(Client& newClient);
-	int Input();
-	void Output();
-	void Sort();
-	int Search(const Client& tempClient);
-	void Replace(Client* newClient);
-	void Remove(Client& badClient);
-};
-
 class Client {
 private:
 	char* name; // Имя клиента
@@ -32,12 +11,34 @@ private:
 public:
 	Client();
 	Client(const char* n, const char* c, int p, int a);
+	Client(const Client& t);
 	~Client();
 	int input();
 	void output();
 	int cmp(const Client& b);
 	int equal(const Client& b);
-	friend Client* Table::Copy(Client& client);
-	friend void Table::Replace(Client* newClient);
-	friend void Table::Remove(Client& badClient);
+	Client* copy();
+};
+
+typedef Client* T; // Теперь таблица работает с абстрактным типом T
+
+class Table {
+private:
+	int size; // Размер таблицы
+	T* m; // Таблица клиентов
+	T* current; // Указатель на первый свободный в таблице
+public:
+	Table(int s);
+	~Table();
+	T* Begin();
+	T* End();
+	int Length();
+	int GetSize();
+	T* Insert(const T& newClient);
+	int Input(T buf);
+	void Output();
+	void Sort();
+	int Search(const T& tempClient);
+	void Replace(const T& newClient, const T& oldClient);
+	void Remove(const T& badClient);
 };

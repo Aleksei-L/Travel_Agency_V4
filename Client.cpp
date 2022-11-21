@@ -21,6 +21,18 @@ Client::Client(const char* n, const char* c, int p, int a) {
 	age = a;
 }
 
+// Конструктор копирования
+Client::Client(const Client& t) {
+	name = new char[strlen(t.name) + 1];
+	strcpy_s(name, strlen(t.name) + 1, t.name);
+
+	strcpy_s(city, 30, t.city);
+
+	phone = t.phone;
+
+	age = t.age;
+}
+
 // Деструктор клиента
 Client::~Client() {
 	delete[] name;
@@ -78,4 +90,9 @@ int Client::cmp(const Client& b) {
 // Проверка клиентов на равенство
 int Client::equal(const Client& b) {
 	return !strcmp(name, b.name) && !strcmp(city, b.city) && (phone == b.phone) && (age == b.age);
+}
+
+// Создание копии объекта в динамической памяти
+Client* Client::copy() {
+	return new Client(*this);
 }
