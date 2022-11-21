@@ -1,27 +1,75 @@
 #include "Class.h"
 
 int main() {
-	int size;
+	int size, code, position;
 	std::cout << "Enter Table's size: ";
 	std::cin >> size;
 	Table myT(size);
-	Client buf;
+	Client first, second;
 
-	myT.Input(&buf);
-	std::cout << std::endl;
-	myT.Sort();
-	std::cout << std::endl;
-	myT.Output();
-	std::cout << std::endl;
-
-	std::cout << "Enter new client for Search:" << std::endl;
-	Client one, two;
-	one.input();
-	//two.input();
-	std::cout << myT.Search(&one) << std::endl;
-
-	std::cout << std::endl;
-	myT.Output();
-
-	return 0;
+	while (true) {
+		std::cout << "Select the program operation mode:" << std::endl;
+		std::cout << "1) Input table" << std::endl;
+		std::cout << "2) Output table" << std::endl;
+		std::cout << "3) Sort table" << std::endl;
+		std::cout << "4) Search client in table" << std::endl;
+		std::cout << "5) Erase client from table" << std::endl;
+		std::cout << "6) Remove client from table" << std::endl;
+		std::cout << "7) Replace client in table" << std::endl;
+		std::cout << "10) Exit" << std::endl;
+		std::cin >> code;
+		switch (code) {
+		case 1:
+			std::cout << std::endl;
+			myT.Input(&first);
+			std::cout << std::endl;
+			break;
+		case 2:
+			std::cout << std::endl;
+			myT.Output();
+			std::cout << std::endl;
+			break;
+		case 3:
+			std::cout << std::endl;
+			myT.Sort();
+			std::cout << std::endl;
+			break;
+		case 4:
+			std::cout << std::endl;
+			std::cout << "Enter client for Search:" << std::endl;
+			first.input();
+			std::cout << "Client's index: " << myT.Search(&first) << " (-1 if not founded)" << std::endl;
+			std::cout << std::endl;
+			break;
+		case 5:
+			std::cout << std::endl;
+			std::cout << "Enter position(client's number) for Erase:" << std::endl;
+			std::cin >> position;
+			myT.Erase(myT.Begin() + position - 1);
+			std::cout << std::endl;
+			break;
+		case 6:
+			std::cout << std::endl;
+			std::cout << "Enter client for Remove:" << std::endl;
+			first.input();
+			myT.Remove(&first);
+			std::cout << std::endl;
+			break;
+		case 7:
+			std::cout << std::endl;
+			std::cout << "Enter old client for Replace:" << std::endl;
+			first.input();
+			std::cout << "Enter new client for Replace:" << std::endl;
+			second.input();
+			myT.Replace(&first, &second);
+			std::cout << std::endl;
+			break;
+		case 10:
+			return 0;
+		default:
+			std::cout << std::endl;
+			std::cout << "Unknown command" << std::endl;
+			std::cout << std::endl;
+		}
+	}
 }

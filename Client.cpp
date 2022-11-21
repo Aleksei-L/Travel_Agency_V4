@@ -1,4 +1,5 @@
 #include "Class.h"
+#include <string.h>
 
 // Конструктор клиента по умолчанию
 Client::Client() {
@@ -93,8 +94,8 @@ int Client::cmp(const Client& b) {
 }
 
 // Проверка клиентов на равенство
-int Client::equal(const Client& b) {
-	return !strcmp(name, b.name) && !strcmp(city, b.city) && (phone == b.phone) && (age == b.age);
+int Client::equal(const Client& t) {
+	return !strcmp(name, t.name) && !strcmp(city, t.city) && (phone == t.phone) && (age == t.age);
 }
 
 // Создание копии объекта в динамической памяти

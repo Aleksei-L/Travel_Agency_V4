@@ -1,5 +1,5 @@
-#include <algorithm>
 #include "Class.h"
+#include <algorithm>
 
 // Конструктор таблицы
 Table::Table(int s) {
@@ -31,10 +31,10 @@ int Table::GetSize() {
 	return size;
 }
 
-// Удаление одного элемента в таблице
+// Удаление одного элемента в таблице (по индексу)
 T* Table::Erase(T* pos) {
 	(*pos)->dispose();
-	for (T* i = pos; i < current; i++)
+	for (T* i = pos; i < End(); i++)
 		*i = *(i + 1);
 	current--;
 	return pos;
@@ -57,10 +57,10 @@ T* Table::Insert(const T& newClient) {
 }
 
 // Ввод таблицы
-int Table::Input(T buf) {
+int Table::Input(T item) {
 	int count;
-	for (count = 0; count < GetSize() && buf->input(); count++)
-		Insert(buf);
+	for (count = 0; count < GetSize() && item->input(); count++)
+		Insert(item);
 	return count;
 }
 
@@ -98,39 +98,31 @@ int Table::Search(const T& tempClient) {
 }
 
 // Замена клиента в таблице
-//void Table::Replace(const T& oldClient, const T& newClient) {
-//	int index = Search(oldClient);
-//	while (index != -1) {
-//		delete m[index];
-//
-//		m[index] = newClient;
-//
-//		index = Search(oldClient);
-//	}
-//}
-
-//// Уменьшает размер таблицы после удаления клиентов
-//Client** SizeMinus(Client** myTable, int newsize) {
-//	Client** arr = new Client * [newsize];
-//	for (int i = 0; i < newsize; i++) {
-//		arr[i] = new Client;
-//		arr[i] = myTable[i];
-//	}
-//	return arr;
-//}
+int Table::Replace(const T& oldClient, const T& newClient) {
+	int counter = 0;
+	for (T* i = Begin(); i < End(); i++) {
+		if ((*i)->equal(*oldClient)) {
+			(*i)->dispose();
+			(*i) = (newClient)->copy();
+			counter++;
+		}
+	}
+	return counter;
+}
 
 // Удаление всех вхождений
-//void Table::Remove(const T& badClient) {
-//	int index = Search(badClient);
-//	while (index != -1) {
-//		delete m[index];
-//		m[index] = NULL;
-//		for (int i = index; i < size - 1; i++) {
-//			m[i] = m[i + 1];
-//		}
-//		size--;
-//		current--;
-//		index = Search(badClient);
-//	}
-//	//m = SizeMinus(m, size);
-//}
+int Table::Remove(const T& badClient) {
+	T* i = Begin();
+	int n = 0;
+	for (T* j = Begin(); j < End(); j++) {
+		if (!(*j)->equal(*badClient)) {
+			*i++ = *j;
+		}
+		else {
+			(*j)->dispose();
+			n++;
+		}
+	}
+	current = i;
+	return n;
+}

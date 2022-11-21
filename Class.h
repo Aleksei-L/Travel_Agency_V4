@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <string.h>
 
 class Client {
 private:
@@ -16,8 +15,8 @@ public:
 	~Client();
 	int input();
 	void output();
-	int cmp(const Client& b);
-	int equal(const Client& b);
+	int cmp(const Client& t);
+	int equal(const Client& t);
 	Client* copy();
 };
 
@@ -38,10 +37,10 @@ public:
 	T* Erase(T* pos);
 	void Clear();
 	T* Insert(const T& newClient);
-	int Input(T buf);
+	int Input(T item);
 	void Output();
 	void Sort();
 	int Search(const T& tempClient);
-	void Replace(const T& newClient, const T& oldClient);
-	void Remove(const T& badClient);
+	int Replace(const T& oldClient, const T& newClient);
+	int Remove(const T& badClient);
 };
