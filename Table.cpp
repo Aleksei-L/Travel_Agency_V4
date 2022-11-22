@@ -59,8 +59,11 @@ T* Table::Insert(const T& newClient) {
 // Ввод таблицы
 int Table::Input(T item) {
 	int count;
-	for (count = 0; count < GetSize() && item->input(); count++)
+	for (count = 0; Length() != GetSize(); count++) {
+		if (!item->input())
+			break;
 		Insert(item);
+	}
 	return count;
 }
 
