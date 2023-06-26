@@ -8,6 +8,7 @@ Table::Table(int s) {
 
 // Деструктор таблицы
 Table::~Table() {
+	Clear();
 	delete[] m;
 }
 
@@ -43,7 +44,6 @@ T* Table::Erase(T* pos) {
 // Удаление всех элементов в таблице
 void Table::Clear() {
 	for (T* i = m; i < current; i++) {
-		(*i)->dispose();
 		delete (*i);
 	}
 	current = m;
